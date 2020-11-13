@@ -8,7 +8,7 @@ const { Search } = require('./models/searchModel');
 // Require services functions
 const { searchReed } = require('./services/jobServices');
 
-async function main() {
+async function main(event) {
   /* ***************************************
   DB CONNECTION
   *************************************** */
@@ -31,6 +31,10 @@ async function main() {
   *************************************** */
   const searches = await Search.find();
   const timestamp = new Date();
+  let errCount = 0;
+
+
+
 
   searches.map(async (search) => {
     const apiResponse = await searchReed(search.searchTerms);
@@ -41,8 +45,12 @@ async function main() {
       console.log('count added to saved search');
     } catch (err) {
       console.log(`Search ID:${search._id} failed with Error: ${err.message}`);
+      errCount++;
     }
   });
+
+  console.log('Event:', event);
+  return errCount;
 }
 
-main();
+exports.handler = main;

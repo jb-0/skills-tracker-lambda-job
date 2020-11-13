@@ -33,24 +33,32 @@ async function main(event) {
   const timestamp = new Date();
   let errCount = 0;
 
-
-
-
-  searches.map(async (search) => {
+  async function getCountAndSaveToRecord(search) {
     const apiResponse = await searchReed(search.searchTerms);
+
     try {
       await Search.findByIdAndUpdate(search._id, {
         $push: { dailySearchTermCount: { timestamp, count: apiResponse.totalResults } },
       }).exec();
-      console.log('count added to saved search');
+      console.log(`Count for Search ID:${search._id} added`);
     } catch (err) {
       console.log(`Search ID:${search._id} failed with Error: ${err.message}`);
       errCount++;
     }
-  });
+  }
 
-  console.log('Event:', event);
-  return errCount;
+  async function runForAllRecords() {
+    return Promise.all(searches.map(search => getCountAndSaveToRecord(search)));
+  }
+
+  await runForAllRecords();
+
+  if (event.runType === 'standard') {
+    if (errCount > 0) {
+      return `Standard run complete for ${searches.length} searches with ${errCount} errors`;
+    }
+    return `Standard run complete for ${searches.length} searches`;
+  }
 }
 
 exports.handler = main;

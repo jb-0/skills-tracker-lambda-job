@@ -4,7 +4,7 @@
   "description": "This project is helps job seekers track in demand skills, it works by calling the REED API and allowing the user to create bespoke combinations of skills from a predefined list of skills. The u ser can sign in using Google or Facebook and can save these skill combinations. Once a combination  is saved a job is run on a periodic basis to identify the number of jobs available for their skill  combination and location.",
   "main": "index.js",
   "scripts": {
-    "test": "node -e \"(async () => console.log(await require('./index').handler({test:2})))();\""
+    "test": "node -e \"(async () => console.log(await require('./index').handler({runType:'standard'})))();\""
   },
   "author": "",
   "license": "ISC",

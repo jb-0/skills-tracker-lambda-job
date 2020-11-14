@@ -52,9 +52,9 @@ async function main(event) {
     return Promise.all(searches.map(search => getCountAndSaveToRecord(search)));
   }
 
-  await runForAllRecords();
-
   if (event.runType === 'standard') {
+    await runForAllRecords();
+
     if (errCount > 0) {
       const msg = `Standard run complete for ${searches.length} searches with ${errCount} errors`;
       console.log(msg);

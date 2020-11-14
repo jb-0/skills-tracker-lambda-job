@@ -9,6 +9,7 @@ const { Search } = require('./models/searchModel');
 const { searchReed } = require('./services/jobServices');
 
 async function main(event) {
+  console.log(`Event ${JSON.stringify(event)}`);
   /* ***************************************
   DB CONNECTION
   *************************************** */
@@ -55,9 +56,13 @@ async function main(event) {
 
   if (event.runType === 'standard') {
     if (errCount > 0) {
-      return `Standard run complete for ${searches.length} searches with ${errCount} errors`;
+      const msg = `Standard run complete for ${searches.length} searches with ${errCount} errors`;
+      console.log(msg);
+      return msg;
     }
-    return `Standard run complete for ${searches.length} searches`;
+    const msg = `Standard run complete for ${searches.length} searches`;
+    console.log(msg);
+    return msg;
   }
 }
 

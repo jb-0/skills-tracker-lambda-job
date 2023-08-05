@@ -1,3 +1,7 @@
+# This repo is archived as the code has been migrated to https://github.com/jb-0/skills-tracker
+
+-----
+
 # Skills tracker lambda job
 This Node.js project is designed to be deployed as an AWS Lambda function, it is an extension of my
 skills tracker repository https://github.com/jb-0/skills-tracker. While there are may ways for a
